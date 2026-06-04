@@ -39,6 +39,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
+          protocol: sftp
           # ★ローカルの「dist/」フォルダの中身だけを対象にする
           local-dir: ./dist/
           # Xserver上のアップロード先（ドメイン名はご自身のものに変更してください）
