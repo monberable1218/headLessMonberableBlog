@@ -38,7 +38,7 @@ jobs:
           REMOTE_HOST: ${{ secrets.SSH_HOSTNAME }}
           REMOTE_USER: ${{ secrets.SSH_USERNAME }}
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_PORT: ${{ secrets.SSH_PORT }}
+          REMOTE_PORT: ${{ secrets.SSH_PORT }}
           # ★ローカルの「dist/」フォルダの中身だけを対象にする
           SOURCE: "dist/"
           # Xserver上のアップロード先（ドメイン名はご自身のものに変更してください）
