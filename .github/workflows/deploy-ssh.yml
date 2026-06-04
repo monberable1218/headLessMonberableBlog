@@ -1,0 +1,41 @@
+name: Deploy Astro to Xserver
+
+on:
+  push:
+    branches:
+      - main # mainブランチにpushされたときに自動実行
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 独自のソースコードをチェックアウト
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Node.js環境のセットアップ（Astroのビルドに必要）
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24' # プロジェクトのNodeバージョンに合わせて変更してください
+          cache: 'npm'       # npm, yarn, pnpm などに合わせてキャッシュ（高速化）
+
+      # 3. 依存関係のインストールとAstroのビルド
+      - name: Install dependencies and Build
+        run: |
+          npm ci            # もし pnpm なら pnpm install、yarn なら yarn install --immutable
+          npm run build     # Astroのビルドを実行（デフォルトで dist/ フォルダが生成されます）
+
+      # 4. ビルドされた「distフォルダ」の中身だけをSFTPでXserverへ同期
+      - name: SFTP Deploy to Xserver
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.SSH_HOSTNAME }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          # ★ローカルの「dist/」フォルダの中身だけを対象にする
+          local-dir: ./dist/
+          # Xserver上のアップロード先（ドメイン名はご自身のものに変更してください）
+          server-dir: /home/${{ secrets.SSH_USERNAME }}/monberable.com/public_html/
