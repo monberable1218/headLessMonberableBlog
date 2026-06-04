@@ -32,15 +32,15 @@ jobs:
           npm run build     # Astroのビルドを実行（デフォルトで dist/ フォルダが生成されます）
 
       # 4. ビルドされた「distフォルダ」の中身だけをSFTPでXserverへ同期
-      - name: SFTP Deploy to Xserver
+      - name: Deploy to Xserver via SFTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.SSH_HOSTNAME }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          protocol: sftp
           # ★ローカルの「dist/」フォルダの中身だけを対象にする
-          local-dir: ./dist/
+          SOURCE: "dist/"
           # Xserver上のアップロード先（ドメイン名はご自身のものに変更してください）
-          server-dir: /home/${{ secrets.SSH_USERNAME }}/monberable.com/public_html/
+          TARGET: /home/${{ secrets.SSH_USERNAME }}/monberable.com/public_html/
+          ARGS: "-rlgoDzvc -i --delete"
