@@ -1,6 +1,5 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
-import { glob } from 'astro/loaders';
 
 
 import { createClient } from 'microcms-js-sdk';
@@ -72,10 +71,6 @@ const blogCollection = defineCollection({
 });
 
 
-
-
-
-
 // お知らせのフィールド
 const newsMicroCMSDateFields = {
   id: z.string(),
@@ -110,24 +105,7 @@ const newsCollection = defineCollection({
 });
 
 
-
-
-
-// const newsCollection = defineCollection({
-//   loader: glob({ base: './src/content/news', pattern: '**/*.{md,mdx}' }),
-//   schema: z.object({
-//     title: z.string(),
-//     description: z.string(),
-//     publishDate: z.string(),
-//     upDate: z.string(),
-//     categoryName: z.string(),
-//     categoryLabel: z.string(),
-//   }),
-// });
-
-
 export const collections = {
   "blog": blogCollection,
   "news": newsCollection,
 };
-
