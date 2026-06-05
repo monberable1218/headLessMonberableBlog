@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main # mainブランチにpushされたときに自動実行
+  repository_dispatch:
+    types:
+      - microcms # microCMSにて、お知らせ・ブログのコンテンツを公開、更新した時に自動実行
 
 jobs:
   build-and-deploy:
