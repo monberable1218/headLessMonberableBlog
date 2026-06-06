@@ -1,0 +1,4 @@
+User-Agent:*
+Disallow:/preview-blog/
+Disallow:/preview-news/
+Sitemap:https://monberable.com/sitemap-0.xml
